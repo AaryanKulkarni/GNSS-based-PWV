@@ -1,52 +1,3 @@
-# #!/usr/bin/env python3
-#
-# from gdgps_apps.apps import APPS
-# from gdgps_apps import defines
-# import os
-# import time
-#
-# # Set paths
-# settings_file = r"D:\ML\apps_settings"  # Path to APPS settings file
-# data_folder = r"D:\GNSS PROJECT\2020 BLR NASA WORK\2020 final 18 dec 2024\try"  # Path to orbital files
-#
-# if __name__ == '__main__':
-#     # Initialize APPS client with settings file
-#     apps = APPS(settings_file=settings_file, log_level=None)
-#
-#     # Get all files in the specified folder
-#     files = {f: None for f in os.listdir(data_folder) if os.path.isfile(os.path.join(data_folder, f))}
-#
-#     # Upload each file
-#     for f in list(files.keys()):
-#         file_path = os.path.join(data_folder, f)
-#         print(f'Uploading {f}...')
-#         files[f] = apps.upload_gipsyx(file_path)['id']
-#
-#     pause = 30
-#     while len(files) > 0:
-#         apps.list_data()
-#         for f in list(files.keys()):
-#             info = apps.detail(files[f])
-#             if info['state'] == defines.Data.AVAILABLE:
-#                 path = apps.download_result(info['id'])
-#                 print(f'Retrieved results for file {f}, downloaded to {path}.')
-#
-#                 # Delete unnecessary data
-#                 apps.delete_data(info['id'])
-#                 del files[f]
-#             elif info['state'] == defines.Data.ERROR:
-#                 for flag in info['flags']:
-#                     if flag['level'] == defines.DataFlag.ERROR:
-#                         print(f'APPS encountered an error processing file {f}: ({flag["header"]}) {flag["detail"]}')
-#
-#                 apps.delete_data(info['id'])
-#                 del files[f]
-#             elif info['state'] == defines.Data.VERIFIED:
-#                 # Approve for processing
-#                 apps.approve(info['id'])
-#
-#         print(f'Waiting on {len(files)} submissions, checking again in {pause} seconds...')
-#         time.sleep(pause)
 from gdgps_apps.apps import APPS
 from gdgps_apps import defines
 import os
@@ -55,8 +6,8 @@ import threading
 
 # Set paths
 #"portal": "https://pppx.gdgps.net/"
-settings_file = r"D:\ML\apps_settings"  # Path to APPS settings file
-data_folder = r"D:\GNSS PROJECT\2020 BLR NASA WORK\try"  # Path to orbital files
+settings_file = r""  # Path to APPS settings file
+data_folder = r""  # Path to orbital files
 
 # Initialize APPS client with settings file
 apps = APPS(settings_file=settings_file, log_level=None)
@@ -124,4 +75,5 @@ if __name__ == '__main__':
 
     except KeyboardInterrupt:
         print("\nExecution interrupted by user. Stopping all processes...")
+
         running = False  # Stop all threads
